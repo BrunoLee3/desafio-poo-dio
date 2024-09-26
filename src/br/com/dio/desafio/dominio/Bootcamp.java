@@ -1,10 +1,8 @@
 package br.com.dio.desafio.dominio;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Bootcamp {
     private String nome;
@@ -14,6 +12,13 @@ public class Bootcamp {
     private Set<Dev> devsInscritos = new HashSet<>();
     private Set<Conteudo> conteudos = new LinkedHashSet<>();
 
+    public void rankingDevs(){
+        Set<Dev> devsRankeados = devsInscritos.stream()
+                .sorted(Comparator.comparing(Dev::calcularTotalXp).reversed())
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        devsRankeados.stream().forEach(dev -> System.out.println(dev.getNome()));
+    }
 
     public String getNome() {
         return nome;
